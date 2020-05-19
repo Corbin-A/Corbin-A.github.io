@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Understanding Deep Neural Networds: Overview
+title: Overview of Deep Neural Networks 
 ---
 
 ![Neuron](/images/dnn-overview/neuron.jpg)
@@ -58,7 +58,7 @@ These weights, when the model is first created, are randomly initialized to valu
 
 We’re not going to worry about this too much right now, but with these classification problems, there is an **associated cost function**, one of the most popular being categorical cross-entropy, also known as log loss. Again, not that important right now, but know it exists. So the model got the prediction wrong. How wrong? Well, that’s where our “loss function” comes into play. Our model, if it were 100% accurate, would say that polar bear had a probability of 1 and a probability for 0 for all other 999 nodes. So **there is some substantial loss on every single output node with the initial random weights**. But if we were to change these weights on the previous layers, eventually those changes would permeate to the output layer. So you can see that **the amount of loss is a function of the different weights, so if you change the weights a bit, you can change the loss**. We want to minimize this level of loss.
 
-![Gradient Descent visualization](/images/dnn-overview/grad-desc.jpg)
+![Gradient Descent visualization](/images/dnn-overview/grad-desc.png)
 
 With this in mind, imagine a plot with different weights equating to different levels of loss, such as in the contour plot on the right. If we take the derivative of our current position within this weight-space, we can start changing the weights slightly, thereby taking small steps towards minimizing the loss. **This is a process called gradient descent**. Once the model has reached the minima, it will have minimized its cost function and **the model has now LEARNED the correct weights to correctly identify the images**. That’s all there is to it. You now have a trained model. Now, you’ll have been feeding it a LOT of images, and the loss function is really the sum of all these losses. This means that the model is generalized. It doesn’t just recognize a polar bear, but it recognizes corn, candles, and lollipops as well, assuming these images were used in training the network.
 
