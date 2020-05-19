@@ -12,7 +12,8 @@ We can, and likely will, discuss the science and psychology of this refusal to m
 Some information about you!
 
 ### The guy behind the blog
-![Image of me and my wife](/images/corbin_and_alex.jpg)
+![Image of me and my wife](/images/corbin_and_alex.jpg =250x)
+
 As for me, I am a Senior Data Scientist at IBM\*. Outside of Computer Science, I am a lover of food and fitness. Of Politics and speculation. Of Psychology and Philosophy. Of critical thought and discussion. In the end, I am simply a lover of learning.
 
 The topics I hope to cover are varied in nature: some long-form political and cultural discussion, some sharing of what I am currently learning or fascinated by, a bit of CS and AI for good measure, the list could go on forever. Essentially, I plan to write about what I’m currently thinking about and interested in. There is so much in this world to deliberate and discuss, spanning a myriad of fields. The hope is that these posts can begin a dialogue with anyone who is open to developing their own ideas and takes the time to read them.
