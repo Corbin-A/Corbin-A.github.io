@@ -13,7 +13,7 @@ We can, and likely will, discuss the science and psychology of this refusal to m
 Some information about you!
 
 ### The guy behind the blog
-![Image of me and my wife](/images/corbin_and_alex.jpg){:height="50%" width="50%"}
+![Image of me and my wife](/images/corbin_and_alex.jpg){:height="50%" width="50%" style="float: left"}
 
 As for me, I am a Senior Data Scientist at IBM\*. Outside of Computer Science, I am a lover of food and fitness. Of Politics and speculation. Of Psychology and Philosophy. Of critical thought and discussion. In the end, I am simply a lover of learning.
 
