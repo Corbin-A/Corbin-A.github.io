@@ -22,4 +22,4 @@ Thank you for visiting, and I hope you enjoy the blog.
 
 ### Contact me
 
-[corbin.albert@gmail.com](mailto:email@domain.com)
+[corbin.albert@gmail.com](mailto:corbin.albert@gmail.com)
