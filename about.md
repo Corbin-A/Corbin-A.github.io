@@ -3,7 +3,7 @@ layout: page
 title: About
 permalink: /about/
 ---
-![Ryokan from my travels in Japan](/images/ryokan.jpg)
+![Ryokan from my travels in Japan](/images/about/ryokan.jpg)
 
 Hello, and welcome to Developing Ideas! My name is Corbin Albert and this is my blog. In this corner of the internet, I am hoping to articulate my ever-evolving ideas, perspectives, and worldview. But more than that, I hope this blog will facilitate an opportunity to learn from others and hear the reasonings behind differing beliefs.
 
@@ -13,7 +13,7 @@ We can, and likely will, discuss the science and psychology of this refusal to m
 Some information about you!
 
 ### The guy behind the blog
-![Image of me and my wife](/images/corbin_and_alex.jpg){:height="50%" width="50%" style="float: right" padding: 10px}
+![Image of me and my wife](/images/about/corbin_and_alex.jpg){:height="50%" width="50%" style="float: right" padding: 10px}
 
 As for me, I am a Senior Data Scientist at IBM\*. Outside of Computer Science, I am a lover of food and fitness. Of Politics and speculation. Of Psychology and Philosophy. Of critical thought and discussion. In the end, I am simply a lover of learning.
 
