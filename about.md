@@ -4,6 +4,7 @@ title: About
 permalink: /about/
 ---
 ![Ryokan from my travels in Japan](/images/ryokan.jpg)
+
 Hello, and welcome to Developing Ideas! My name is Corbin Albert and this is my blog. In this corner of the internet, I am hoping to articulate my ever-evolving ideas, perspectives, and worldview. But more than that, I hope this blog will facilitate an opportunity to learn from others and hear the reasonings behind differing beliefs.
 
 In naming this blog Developing Ideas, I hope to emphasize a sense of dynamism in the formulation of one’s views. I find the lack of this fluidity to be a critical problem in today’s political and social discourse, and it is a discussion I hope to continually have throughout the development of this site. By no means am I advocating a lack of conviction nor a refusal to take a stance, but rather to have well-reasoned beliefs that can adapt to new information and open themselves to insights. After all, if you want to always be right, you must always be willing to change your mind.
