@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Building a $2,300 Deep Learning Server
+title: Depth vs. Breadth-first Learning
 ---
 []: # (Written on 2017-06-02)
 ![](/images/depth-breadth-learning/learn-benches.jpg)
