@@ -2,7 +2,7 @@
 layout: post
 title: Building a $2,300 Deep Learning Server
 ---
-
+[]: # (Written on 2017-06-02)
 ![](/images/depth-breadth-learning/learn-benches.jpg)
 
 What if I told you that the foundations of learning structure propagated in the western education system was fundamentally flawed? That there is a better way to learn than how you’ve been taught to learn your entire life? It may come as a bit of a shock, but I strongly believe this to be the case. In the modern education system, we utilize a depth-first learning structure, in which we drill very deeply into one subject before moving on to the next, without any initial explanation as to why we’re learning what we’re learning or how the entire puzzle fits together. This leads to over-compartmentalization and does not communicate the motivation behind learning the concept in the first place. Instead, I recommend a different approach, namely a breadth-first learning structure in which progressively more and more detailed overviews are given, covering all topics within a field concurrently to better understand the overall picture and how what you are learning in one subfield applies to the others. I further extend this to the learning of any topic outside of the classroom and will demonstrate with examples how this can be applied.
