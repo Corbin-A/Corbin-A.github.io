@@ -26,7 +26,7 @@ numpy, pandas, sklearn, etc. TODO
 Database instead of flat files. TODO
 
 ### Create `.pre-commit-hooks.yaml` File
-copy and paste. talk about installing precommit, etc.
+copy and paste. talk about installing precommit, etc. Make sure you are on pre-commit 2.6 in order to properly identify ipynb files.
 
 ### Set up CI
 TODO
@@ -47,7 +47,7 @@ TODO
 TODO
 
 ### Use nbstripout for commiting notebooks to github
-incorporate into git hooks?
+incorporate into git hooks!!
 
 ### Manage environment variables in local .env folders
 TODO
