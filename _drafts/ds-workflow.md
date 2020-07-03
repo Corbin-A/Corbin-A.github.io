@@ -20,7 +20,7 @@ cookiecutter. TODO
 copy and paste from project. TODO
 
 ### Install Universally Needed Dependencies and Populate Intial `environment.yml` or `requirements.txt` file
-numpy, pandas, sklearn, etc. TODO
+numpy, pandas, sklearn, mypy, flake8, pytest, nbstripout, pre-commit, etc. TODO
 
 ### Set up Data Infrastructure
 Database instead of flat files. TODO
