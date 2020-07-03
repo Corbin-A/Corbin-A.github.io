@@ -4,7 +4,6 @@
 
 # Name of your site (displayed in the header)
 name: Corbin Albert
-title: Developing Ideas
 
 # Short bio or description (displayed in the header)
 description: Data Scientist, hopelessly learning how much he still has to learn
@@ -38,7 +37,7 @@ footer-links:
 disqus: corbin-a
 
 # Enter your Google Analytics web tracking code (e.g. UA-2110908-2) to activate tracking
-google_analytics: "UA-100085311-1"
+google_analytics:
 
 # Your website URL (e.g. http://barryclark.github.io or http://www.barryclark.co)
 # Used for Sitemap.xml and your RSS feed
