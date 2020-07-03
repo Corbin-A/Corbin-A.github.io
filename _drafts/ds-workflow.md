@@ -10,6 +10,27 @@ With that said, I want to mention some caveats:
 2. Every project is different. This is a rough guide for myself and others and should be treated as such.
 3. My expertise is in data science, which has a distinctly different project structure from traditional SE. There will be some crossover in this list, but it will be tailored towards data science (hell, it's in the title).
 
+## Ways of working
+TODO
+
+### Branching
+TODO
+
+### Testing
+Bake into CI. Force coverage.
+
+### Enforce use of flake8, mypy, nbstripout
+TODO
+incorporate into git hooks!!
+
+### Use github projects / issues for project management
+TODO
+
+### Manage environment variables in local .env folders
+TODO
+
+### Write README docs in rst
+
 ## Starting out the Project
 Brief Intro. TODO
 
@@ -22,32 +43,13 @@ copy and paste from project. TODO
 ### Install Universally Needed Dependencies and Populate Intial `environment.yml` or `requirements.txt` file
 numpy, pandas, sklearn, mypy, flake8, pytest, nbstripout, pre-commit, etc. TODO
 
-### Set up Data Infrastructure
-Database instead of flat files. TODO
-
 ### Create `.pre-commit-hooks.yaml` File
 copy and paste. talk about installing precommit, etc. Make sure you are on pre-commit 2.6 in order to properly identify ipynb files.
+
+### Set up Data Infrastructure
+Database instead of flat files. TODO
 
 ### Set up CI
 TODO
 
-## Ways of working
-TODO
-
-### Branching
-TODO
-
-### Testing
-Bake into CI. Force coverage.
-
-### Enforce use of flake8 and mypy
-TODO
-
-### Use github projects / issues for project management
-TODO
-
-### Use nbstripout for commiting notebooks to github
-incorporate into git hooks!!
-
-### Manage environment variables in local .env folders
-TODO
+### Write Getting Started section of README file
