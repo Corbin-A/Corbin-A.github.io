@@ -14,7 +14,7 @@ With that said, I want to mention some caveats:
 TODO
 
 ### Branching
-TODO
+(force pr for master merge) TODO
 
 ### Testing
 Bake into CI. Force coverage.
