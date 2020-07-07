@@ -1,3 +1,4 @@
+---
 layout: post
 title: Starting a Data Science Project from Scratch
 ---
