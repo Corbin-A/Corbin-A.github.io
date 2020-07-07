@@ -3,7 +3,7 @@ layout: post
 title: Starting a Data Science Project from Scratch
 ---
 
-For those that don't know, I am a Senior Data Scientist at IBM (specifically in GBS, IBM's consulting arm). As a Sr. DS, I am tasked with leading small teams of data scientists to delivery on client engagements which are generally around 6 - 12 weeks long each. As such, I have had to start quite a few distinct DS projects. Surprisingly, there is no established set of best practices for technical leads to follow within IBM, so I have had to hone my own process over the years. Since I've had to learn lots of things the hard way, I thought I would write down my process here for my own reference and for anyone else to take and use themselves.
+For those that don't know, I am a Senior Data Scientist at IBM (specifically in GBS, IBM's consulting arm). As a Sr. DS, I am tasked with leading small teams of data scientists to delivery on client engagements which are generally around 6 - 12 weeks long. As such, I have had to start quite a few distinct DS projects. Surprisingly, there is no established set of best practices for technical leads to follow within IBM, so I have had to hone my own process over the years. Since I've had to learn lots of things the hard way, I thought I would write down my process here for my own reference and for anyone else to take and use themselves.
 
 With that said, I want to mention some caveats:
 1. There are almost certainly better ways to do certain things that I don't know about. Please leave suggestions in the comments!
@@ -11,17 +11,20 @@ With that said, I want to mention some caveats:
 3. I code almost exclusively in python for Data Science. I do not know the R ecosystem well enough to give advice on R projects.
 4. My expertise is in data science, which has a distinctly different project structure from traditional SE. There will be some crossover in this list, but it will be tailored towards data science (hell, it's in the title).
 
-This page will deal specifically with:
-1. Starting directory structure via [cookiecutter-datascience](https://github.com/drivendata/cookiecutter-data-science)
-2. Create `environment.yml` file seeded with necessary packages
-3. Create `setup.py` file for easy `pip install -e .`
-4. Create `.pre-commit-config.yaml` file to enforce nbstripout, flake8 and mypy via pre-commit git hook
-5. Create `.travis.yml` or other CI recipe file
-6. Create `tests/` directory
+This page will deal specifically with creating:
+1. The overall directory structure
+2. An `environment.yml` file seeded with necessary packages
+3. A `setup.py` file for easy `pip install -e .`
+4. A `.pre-commit-config.yaml` file to enforce nbstripout, flake8 and mypy via pre-commit git hook
+5. `tests/` directory and notes around testing in DS projects
+6. A `.travis.yml` or other CI recipe file
+7. Data infrastructure
+8. Getting Started section in README
 
 ### Directory structure
 This should be flexible to accomidate the needs of the project, but a great starting point can be found at [cookiecutter-datascience](https://github.com/drivendata/cookiecutter-data-science). When I personally start off a project, I remove some of the pre-populated files and get down to the following directory structure:
-```bash
+
+```
 ├── .gitignore
 │
 ├── README.rst         <- The top-level README for developers using this project.
@@ -80,25 +83,28 @@ setup(
 ```
 After this is done, all a dev will need to do is navigate to the project root directory via a terminal and run `pip install -e .`, which will use pip to download the package to their local env and allow for absolute imports in their source code.
 
-### Install universally needed dependencies and populate intial `environment.yml` or `requirements.txt` file
+### Create intial `environment.yml` or `requirements.txt` file
 One difficulty of working on a project with many people is getting everyone on the same page as regards project dependencies. The natural solution is to use a virtual environment and upload a `requirements.txt` or `environment.yml` file to github. For DS projects, I recommend using conda environments, as their dependency management is miles above the competition, though my experience is admittedly limited on some of the other options like `poetry`. 
 
-In addition to this, there are some libraries that are so ubiquitous that I recommend seeding the `environment.yml` file with some of the top libraries so that everyone starts on the same page. These packages include numpy, pandas, sklearn, and jupyter, as well as linting, testing, and misc libraries such as mypy, flake8, pytest, nbstripout, pre-commit, etc. NOTE: If your project involves time series and you plan on using fbprophet, it currently does not support python 3.8, so make sure to either include prophet in your list of seeded libraries, or specify python=3.7 when you create your conda env.
+In addition to this, there are some libraries that are so ubiquitous in Data Science projects that I recommend seeding the `environment.yml` file with some of these top libraries so that everyone starts on the same page. These packages include numpy, pandas, sklearn, and jupyter, as well as linting, testing, and misc libraries such as mypy, flake8, pytest, nbstripout, pre-commit, etc. Depending on the project, XGBoost and fbprophet may also fit the bill.
+
+ (NOTE: If your project involves time series and you plan on using fbprophet, it currently does not support python 3.8 as of the time of this writing, so make sure to either include `fbprophet` in your list of seeded libraries, or specify python=3.7 when you create your conda env.)
 
 So my recommendation is to run the following commands in the project root directory:
 1. `conda create -n <shorthand-project-name-for-env> numpy pandas scikit-learn jupyter jupyter_contrib_nbextensions mypy flake8 pytest pytest-cov nbstripout pre-commit`
 2. `conda env export --no-builds | grep -v "prefix" > environment.yml`
 
-The second command will export the environment with version numbers to a file called `environment.yml` which devs can then use by navigating to the project root directory and running `conda env update && conda activate <shorthand-project-name-for-env>`. This will ensure that all devs are using conda, virtual environments, and everyone is using the same versions of the most important packages. As the project evolves and dependencies grow, you may need to consolidate various envs, but this gets all devs started off on the same page.
+The second command will export the environment with version numbers (but not build identifiers) to a file called `environment.yml` which devs can then use by navigating to the project root directory and running `conda env update && conda activate <shorthand-project-name-for-env>`. This will ensure that all devs are using conda, virtual environments, and everyone is using the same versions of the most important packages. As the project evolves and dependencies grow, you may need to consolidate various envs, but this gets all devs started off on the same page.
 
 ### Create `.pre-commit-hooks.yaml` file
 For the uninitiated, git provides a miniature version of Continuous Integration (CI) via git hooks. I recommend looking these up, but essentially you can instruct git to run certain code at various stages of the git workflow, noteably `pre-commit`. What this means is you can force certain linting standards to be met before devs can commit their code and consequently push upstream to their branches. Everyone is going to have a different opinion about this, but I think the following checks are highly beneficial to include as pre-commit hooks
 
-1. nbstripout: This program ensures that all output has been stripped from notebooks which is very beneficial for VC
-2. mypy: I am firmly of the belief providing type hints in python makes for better code, so I recommend enforcing their use
-3. flake8: Helps adhere to PEP8 standards. Feel free to add in any ignores that better suit your company's style guide
+- nbstripout: This program ensures that all output has been stripped from notebooks which is very beneficial for VC
+- mypy: I am firmly of the belief providing type hints in python makes for better code, so I recommend enforcing their use
+- flake8: Helps adhere to PEP8 standards. Feel free to add in any ignores that better suit your company's style guide
 
 Here is an example `.pre-commit-hooks.yaml` file that I use for all of my projects (note that you will need to edit one of the mypy entries):
+
 ```yaml
 repos:
 - repo: https://github.com/pre-commit/pre-commit-hooks
@@ -128,10 +134,11 @@ repos:
     - id: nbstripout
       files: ".ipynb"
 ```
+
 One thing I will note here is that I do not include pytest in my pre-commit hooks. This is because testing can take a lot of time and can consequently discourage devs from commiting often (as they should be doing). However, pytest is included in the CI pipeline, which is discussed later in the article. However, speaking of testing...
 
 ### Create `tests/` directory
-Code should be tested, and DS code is no different. I very rarely see this discussed, further evidenced by the fact that there is no tests directory in the cookiecutter project template which baffles me. If we are scientists, what is more important than ensuring accurate code and reproducibility? Tests help us do this, and instantiating a culture of testing in your team will make life a lot easier in the long run. In data science there are a lot of assumptions that are made, such as "I don't expect there to be nans in this column" or "this is a cumulative column, so it should be monotonically increasing". However, these assumptions do not always hold up over time (especially if another team manages the underlying data) and code / models can very easily break if underlying assumptions are broken. Therefore we should all be baking tests into our workflows and ensuring our assumptions stay valid.
+Code should be tested, and DS code is no different. I very rarely see this discussed, further evidenced by the fact that there is no tests directory in the cookiecutter project template which baffles me. If we are scientists, what is more important than ensuring accurate code and reproducibility? Tests help us do this, and instantiating a culture of testing in your team will make life a lot easier in the long run. In data science there are a lot of assumptions that are made, such as "I don't expect there to be nans in this column" or "this is a cumulative column, so it should be monotonically increasing". However, these assumptions do not always hold up over time (especially if another team manages the underlying data) and code / models can very easily break if underlying assumptions are broken. Therefore we should all be baking tests into our workflows and ensuring our assumptions stay valid and our code covers edge cases where appropriate.
 
 For testing in python I recommend using pytest. If you're not already familiar, there are endless resources online. I can recommend the following video: [link](https://www.youtube.com/watch?v=4fUzlBbLOaw). You can also incorporate propert-based testing using the [`hypothesis`](https://hypothesis.readthedocs.io/en/latest/) library to generate tests which the linked video also covers.
 
@@ -174,7 +181,8 @@ The next thing on your list of to-do's should be to figure out what your data in
 
 ### Write "Getting Started" section of README file
 Make it as easy as possible for your devs to get up and running now that you have implemented the above structures. An example "Getting Started" section may look like the below:
-```markdown
+
+```
 ### Getting Started
 This project assumes you have Anaconda or Miniconda installed on your machine. If you do not, please install from https://docs.conda.io/en/latest/miniconda.html
 
@@ -185,6 +193,10 @@ This project assumes you have Anaconda or Miniconda installed on your machine. I
 5. Run `pre-commit install`
 ```
 
+Note: If you plan on using Sphinx for documentation automation, then make sure your READMEs are in RST instead of the more traditional markdown.
+
 ## Room for improvement
 There's lots. I'm still fleshing out some of these files and processes, but some immediate room for improvement is the following:
-- separate test-environment.yaml file that does not install jupyter and its dependencies. This is a very heavy package and makes CI take even longer than it already does.
+- Separate test-environment.yaml file that does not install jupyter and its dependencies. This is a very heavy package and makes CI take even longer than it already does.
+- Notes around documentation automation via sphinx or pdoc
+- Notes around project management via github issues & github projects (trello, jira, etc. as alternatives)
