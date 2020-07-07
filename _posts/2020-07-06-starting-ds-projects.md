@@ -88,7 +88,7 @@ One difficulty of working on a project with many people is getting everyone on t
 
 In addition to this, there are some libraries that are so ubiquitous in Data Science projects that I recommend seeding the `environment.yml` file with some of these top libraries so that everyone starts on the same page. These packages include numpy, pandas, sklearn, and jupyter, as well as linting, testing, and misc libraries such as mypy, flake8, pytest, nbstripout, pre-commit, etc. Depending on the project, XGBoost and fbprophet may also fit the bill.
 
- (NOTE: If your project involves time series and you plan on using fbprophet, it currently does not support python 3.8 as of the time of this writing, so make sure to either include `fbprophet` in your list of seeded libraries, or specify python=3.7 when you create your conda env.)
+ (NOTE: If your project involves time series and you plan on using fbprophet, it currently does not support python 3.8 as of the time of this writing, so make sure to either include `fbprophet` in your list of seeded libraries, or specify `python=3.7` when you create your conda env.)
 
 So my recommendation is to run the following commands in the project root directory:
 
