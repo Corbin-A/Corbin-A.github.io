@@ -22,7 +22,7 @@ This page will deal specifically with creating:
 8. Getting Started section in README
 
 ### Directory structure
-This should be flexible to accomidate the needs of the project, but a great starting point can be found at [cookiecutter-datascience](https://github.com/drivendata/cookiecutter-data-science). When I personally start off a project, I remove some of the pre-populated files and get down to the following directory structure:
+This should be flexible to accomodate the needs of the project, but a great starting point can be found at [cookiecutter-datascience](https://github.com/drivendata/cookiecutter-data-science). When I personally start off a project, I remove some of the pre-populated files and get down to the following directory structure:
 
 ```
 ├── .gitignore
@@ -200,6 +200,6 @@ Note: If you plan on using Sphinx for documentation automation, then make sure y
 
 ## Room for improvement
 There's lots. I'm still fleshing out some of these files and processes, but some immediate room for improvement is the following:
-- Separate test-environment.yaml file that does not install jupyter and its dependencies. This is a very heavy package and makes CI take even longer than it already does.
+- Separate test-environment.yaml file that does not install jupyter and its dependencies in your CI system. This is a very heavy package and makes CI take longer than necessary.
 - Notes around documentation automation via sphinx or pdoc
 - Notes around project management via github issues & github projects (trello, jira, etc. as alternatives)
