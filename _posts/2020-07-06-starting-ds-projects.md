@@ -102,7 +102,7 @@ The second command will export the environment with version numbers (but not bui
 ### Create `.pre-commit-hooks.yaml` file
 For the uninitiated, git provides a miniature version of Continuous Integration (CI) via git hooks. I recommend looking these up, but essentially you can instruct git to run certain code at various stages of the git workflow, noteably `pre-commit`. What this means is you can force certain linting standards to be met before devs can commit their code and consequently push upstream to their branches. Everyone is going to have a different opinion about this, but I think the following checks are highly beneficial to include as pre-commit hooks
 
-- nbstripout: This program ensures that all output has been stripped from notebooks which is very beneficial for VC
+- [nbstripout](https://github.com/kynan/nbstripout): No data science project that utilizes notebooks should be without this program as a pre-commit hook. `nbstripout` ensures that all output has been stripped from notebooks which is very beneficial for VC. See [this video](https://www.youtube.com/watch?v=BEMP4xacrVc) for evidence of how useful this is.
 - mypy: I am firmly of the belief providing type hints in python makes for better code, so I recommend enforcing their use
 - flake8: Helps adhere to PEP8 standards. Feel free to add in any ignores that better suit your company's style guide
 
