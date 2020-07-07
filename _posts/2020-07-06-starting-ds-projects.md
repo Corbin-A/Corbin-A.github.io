@@ -84,15 +84,18 @@ setup(
 After this is done, all a dev will need to do is navigate to the project root directory via a terminal and run `pip install -e .`, which will use pip to download the package to their local env and allow for absolute imports in their source code.
 
 ### Create intial `environment.yml` or `requirements.txt` file
-One difficulty of working on a project with many people is getting everyone on the same page as regards project dependencies. The natural solution is to use a virtual environment and upload a `requirements.txt` or `environment.yml` file to github. For DS projects, I recommend using conda environments, as their dependency management is miles above the competition, though my experience is admittedly limited on some of the other options like `poetry`. 
+One difficulty of working on a project with many people is getting everyone on the same page as regards project dependencies. The natural solution is to use a virtual environment and upload a `requirements.txt` or `environment.yml` file to github. For DS projects, I recommend using conda environments, as their dependency management is (supposedly) miles above the competition as regards dependency management for scientific libraries (though my experience is admittedly limited on some of the other options like `poetry`). 
 
 In addition to this, there are some libraries that are so ubiquitous in Data Science projects that I recommend seeding the `environment.yml` file with some of these top libraries so that everyone starts on the same page. These packages include numpy, pandas, sklearn, and jupyter, as well as linting, testing, and misc libraries such as mypy, flake8, pytest, nbstripout, pre-commit, etc. Depending on the project, XGBoost and fbprophet may also fit the bill.
 
  (NOTE: If your project involves time series and you plan on using fbprophet, it currently does not support python 3.8 as of the time of this writing, so make sure to either include `fbprophet` in your list of seeded libraries, or specify python=3.7 when you create your conda env.)
 
 So my recommendation is to run the following commands in the project root directory:
-1. `conda create -n <shorthand-project-name-for-env> numpy pandas scikit-learn jupyter jupyter_contrib_nbextensions mypy flake8 pytest pytest-cov nbstripout pre-commit`
-2. `conda env export --no-builds | grep -v "prefix" > environment.yml`
+
+```bash
+conda create -n <shorthand-project-name-for-env> numpy pandas scikit-learn jupyter jupyter_contrib_nbextensions mypy flake8 pytest pytest-cov nbstripout pre-commit
+conda env export --no-builds | grep -v "prefix" > environment.yml
+```
 
 The second command will export the environment with version numbers (but not build identifiers) to a file called `environment.yml` which devs can then use by navigating to the project root directory and running `conda env update && conda activate <shorthand-project-name-for-env>`. This will ensure that all devs are using conda, virtual environments, and everyone is using the same versions of the most important packages. As the project evolves and dependencies grow, you may need to consolidate various envs, but this gets all devs started off on the same page.
 
