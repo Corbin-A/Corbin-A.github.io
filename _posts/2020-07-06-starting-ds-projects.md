@@ -173,11 +173,11 @@ install:
   - python setup.py install
 script:
   - python -m pytest --cov=<pkg_name> --cov-fail-under=80
-  - mypy --ignore-missing-imports --disallow-untyped-defs
-  - flake8 --ignore=E401 --max-line-length=160
+  - mypy --ignore-missing-imports --disallow-untyped-defs <pkg_name>
+  - flake8 --ignore=E401 --max-line-length=160 <pkg_name>
 ```
 
-The mypy and flake8 checks will already be handled by the pre-commit git hooks we mentioned earlier, but this will ensure that the devs adhered to the reqs. NOTE: You will need to change the `--cov=` value. Additionally, change the `--cov-fail-under` value to your intended coverage percentage.
+The mypy and flake8 checks will already be handled by the pre-commit git hooks we mentioned earlier, but this will ensure that the devs adhered to the reqs. NOTE: You will need to change the `--cov=`, mypy and flake8 options/args to your package name. Additionally, change the `--cov-fail-under` value to your intended coverage percentage.
 
 ### Set up Data Infrastructure
 The next thing on your list of to-do's should be to figure out what your data infrastructure is going to be. This _could_ be flat files in the data directory of the project, but I really don't recommend this as a longterm solution. Databases are your friend and you should use them. Whether it is on-prem or cloud-based is not of consequence, I would just recommend that you set up the database using whatever tools you are familiar with. I can recommend using SQLAlchemy to build the tables and structure in python. Feel free to start with a simple db like SQLite, but you may want to migrate to a more robust db like postgres once you have worked out the SQLAlchemy scripts. That said, I think SQLite is a perfectly suitable DB for small projects and there isn't much of an argument to be made for switching unless you anticipate the project needing to scale massively in the future.

@@ -39,25 +39,3 @@ TODO
 
 ### Write README docs in rst instead of md for autodocumentation
 
-## Starting out the Project
-Brief Intro. TODO
-
-### Directory Structure
-cookiecutter. TODO
-
-### Write Minimal `setup.py` File
-copy and paste from project. TODO
-
-### Install Universally Needed Dependencies and Populate Intial `environment.yml` or `requirements.txt` file
-numpy, pandas, sklearn, mypy, flake8, pytest, nbstripout, pre-commit, etc. TODO
-
-### Create `.pre-commit-hooks.yaml` File
-copy and paste. talk about installing precommit, etc. Make sure you are on pre-commit 2.6 in order to properly identify ipynb files.
-
-### Set up Data Infrastructure
-Database instead of flat files. TODO
-
-### Set up CI
-TODO
-
-### Write Getting Started section of README file
