@@ -27,7 +27,7 @@ This should be flexible to accomodate the needs of the project, but a great star
 ```
 ├── .gitignore
 │
-├── README.rst         <- The top-level README for developers using this project.
+├── README.md         <- The top-level README for developers using this project.
 │
 ├── data
 │   ├── external       <- Data from third party sources.
@@ -45,6 +45,8 @@ This should be flexible to accomodate the needs of the project, but a great star
 │
 ├── reports            <- Generated analysis as HTML, PDF, LaTeX, etc.
 │   └── figures        <- Generated graphics and figures to be used in reporting
+│
+├── tests              <- Automated pytest tests
 │
 └── <pkg_name>         <- Source code for use in this project.
     ├── __init__.py    <- Makes src a Python module
@@ -78,7 +80,8 @@ setup(
     author='author name',
     author_email='author@email.com',
     url='github pages or github link, or whatever you are using for your project',
-    packages=find_packages()
+    packages=find_packages(),
+    license='license-type',
 )
 ```
 After this is done, all a dev will need to do is navigate to the project root directory via a terminal and run `pip install -e .`, which will use pip to download the package to their local env and allow for absolute imports in their source code.
@@ -86,14 +89,14 @@ After this is done, all a dev will need to do is navigate to the project root di
 ### Create intial `environment.yml` or `requirements.txt` file
 One difficulty of working on a project with many people is getting everyone on the same page as regards project dependencies. The natural solution is to use a virtual environment and upload a `requirements.txt` or `environment.yml` file to github. For DS projects, I recommend using conda environments, as their dependency management is (supposedly) miles above the competition as regards dependency management for scientific libraries (though my experience is admittedly limited on some of the other options like `poetry`). 
 
-In addition to this, there are some libraries that are so ubiquitous in Data Science projects that I recommend seeding the `environment.yml` file with some of these top libraries so that everyone starts on the same page. These packages include numpy, pandas, sklearn, and jupyter, as well as linting, testing, and misc libraries such as mypy, flake8, pytest, nbstripout, pre-commit, etc. Depending on the project, XGBoost and fbprophet may also fit the bill.
+In addition to this, there are some libraries that are so ubiquitous in Data Science projects that I recommend seeding the `environment.yml` file with some of these top libraries so that everyone starts on the same page. These packages can include numpy, pandas, sklearn, and jupyter, as well as linting, testing, and misc libraries such as mypy, black, flake8, pytest, nbstripout, pre-commit, etc. Depending on the project, XGBoost and fbprophet may also fit the bill.
 
  (NOTE: If your project involves time series and you plan on using fbprophet, it currently does not support python 3.8 as of the time of this writing, so make sure to either include `fbprophet` in your list of seeded libraries, or specify `python=3.7` when you create your conda env.)
 
 So my recommendation is to run the following commands in the project root directory:
 
 ```bash
-conda create -n <shorthand-project-name-for-env> numpy pandas scikit-learn jupyter jupyter_contrib_nbextensions mypy flake8 pytest pytest-cov nbstripout pre-commit
+conda create -n <shorthand-project-name-for-env> numpy pandas scikit-learn jupyter jupyter_contrib_nbextensions mypy flake8 pytest pytest-cov nbstripout pre-commit black
 conda env export --no-builds | grep -v "prefix" > environment.yml
 ```
 
@@ -104,11 +107,12 @@ For the uninitiated, git provides a miniature version of Continuous Integration 
 
 - [nbstripout](https://github.com/kynan/nbstripout): No data science project that utilizes notebooks should be without this program as a pre-commit hook. `nbstripout` ensures that all output has been stripped from notebooks which is very beneficial for VC. See [this video](https://www.youtube.com/watch?v=BEMP4xacrVc) for evidence of how useful this is.
 - mypy: I am firmly of the belief providing type hints in python makes for better code, so I recommend enforcing their use
+- black: This is an auto-formatter for python. Spend less time learning the individual coding styles of each of your developers and instead let black enforce standardized best practices.
 - flake8: Helps adhere to PEP8 standards. Feel free to add in any ignores that better suit your company's style guide
 
 Here is an example `.pre-commit-hooks.yaml` file that I use for all of my projects (note that you will need to edit one of the mypy entries):
 
-```yaml
+```
 repos:
 - repo: https://github.com/pre-commit/pre-commit-hooks
   rev: v2.4.0
@@ -116,12 +120,22 @@ repos:
     - id: check-yaml
     - id: end-of-file-fixer
     - id: trailing-whitespace
+- repo: https://github.com/psf/black
+  rev: stable
+  hooks:
+    - id: black
+      language_version: python3.7
+- repo: https://github.com/kynan/nbstripout
+  rev: master
+  hooks:
+    - id: nbstripout
+      files: ".ipynb"
 - repo: https://gitlab.com/pycqa/flake8
   rev: 3.7.8
   hooks:
     - id: flake8
       types: [file, python]
-      args: ['--ignore=E401', '--max-line-length=160']
+      args: ['--ignore=E203,E266,E401,E501,W503,F403,F401', '--max-line-length=120']
 - repo: https://github.com/pre-commit/mirrors-mypy
   rev: v0.780
   hooks:
@@ -130,12 +144,7 @@ repos:
       files: notebooks/
     - id: mypy
       args: [--ignore-missing-imports, --disallow-untyped-defs]
-      files: <pkg_name>  <--- NOTE: CHANGE THIS TO YOUR PROJECT'S NAME AS SPECIFIED IN THE PROJECT ROOT DIRECTORY
-- repo: https://github.com/kynan/nbstripout
-  rev: master
-  hooks:
-    - id: nbstripout
-      files: ".ipynb"
+      files: <pkg_name>
 ```
 
 One thing I will note here is that I do not include pytest in my pre-commit hooks. This is because testing can take a lot of time and can consequently discourage devs from commiting often (as they should be doing). However, pytest is included in the CI pipeline, which is discussed later in the article. However, speaking of testing...
@@ -145,12 +154,13 @@ Code should be tested, and DS code is no different. I very rarely see this discu
 
 For testing in python I recommend using pytest. If you're not already familiar, there are endless resources online. I can recommend the following video: [link](https://www.youtube.com/watch?v=4fUzlBbLOaw). You can also incorporate propert-based testing using the [`hypothesis`](https://hypothesis.readthedocs.io/en/latest/) library to generate tests which the linked video also covers.
 
-I recommend setting a certain threshhold for code coverage to in order to ensure that testing is in fact being done, though code coverage is a notoriously a bad metric to determine the quality of your tests. Percentage coverage is up to you, but I would recommend 70-80%. This can be enforced via CI which we come to presently.
-
 ### Set up CI
 Figure out what service your company uses for continuous integration and make the appropriate file for integrating CI into your project. For instance, IBM uses TravisCI, so I use the following file in for my CI pipeline:
 
-```yaml
+```
+branches:
+  only:
+  - master
 language: python
 python:
   - "3.6"
@@ -163,24 +173,25 @@ install:
   - source "$HOME/miniconda/etc/profile.d/conda.sh"
   - hash -r
   - conda config --set always_yes yes --set changeps1 no
-  - conda config --prepend channels conda-forge
+  - conda config --add channels conda-forge
+  - conda config --set channel_priority strict
   - conda update -q conda
   # Useful for debugging any issues with conda
   - conda info -a
 
   - conda env update
-  - conda activate sf_cri
+  - conda activate <env_name>
   - python setup.py install
 script:
-  - python -m pytest --cov=<pkg_name> --cov-fail-under=80
+  - python -m pytest tests --cov=<pkg_name> --cov-fail-under=<desired_coverage_percentage>
   - mypy --ignore-missing-imports --disallow-untyped-defs <pkg_name>
-  - flake8 --ignore=E401 --max-line-length=160 <pkg_name>
+  - flake8 --ignore=E203,E266,E401,E501,W503,F403,F401 --max-line-length=120 <pkg_name>
 ```
 
 The mypy and flake8 checks will already be handled by the pre-commit git hooks we mentioned earlier, but this will ensure that the devs adhered to the reqs. NOTE: You will need to change the `--cov=`, mypy and flake8 options/args to your package name. Additionally, change the `--cov-fail-under` value to your intended coverage percentage.
 
 ### Set up Data Infrastructure
-The next thing on your list of to-do's should be to figure out what your data infrastructure is going to be. This _could_ be flat files in the data directory of the project, but I really don't recommend this as a longterm solution. Databases are your friend and you should use them. Whether it is on-prem or cloud-based is not of consequence, I would just recommend that you set up the database using whatever tools you are familiar with. I can recommend using SQLAlchemy to build the tables and structure in python. Feel free to start with a simple db like SQLite, but you may want to migrate to a more robust db like postgres once you have worked out the SQLAlchemy scripts. That said, I think SQLite is a perfectly suitable DB for small projects and there isn't much of an argument to be made for switching unless you anticipate the project needing to scale massively in the future.
+The next thing on your list of to-do's should be to figure out what your data infrastructure is going to be. This _could_ be flat files in the data directory of the project, but I really don't recommend this as a longterm solution. What you should implement will depend on the project (as is the case for everything in this post). If your data is large, you might already have a hadoop ecosystem in place. If you're using more manageable datasets, why not use a tried and true RDBMS? Prefer NoSQL? That's fine too. One thing that I still need to do some more research into is DVC (Data Version Control), but it seems very promising.
 
 ### Write "Getting Started" section of README file
 Make it as easy as possible for your devs to get up and running now that you have implemented the above structures. An example "Getting Started" section may look like the below:
@@ -191,7 +202,7 @@ This project assumes you have Anaconda or Miniconda installed on your machine. I
 
 1. `git clone` this repo in the desired directory on your local machine
 2. `cd` into the project directory
-3. Run `conda env update && conda activate <pkg_name>`
+3. Run `conda env update && conda activate <env_name>`
 4. Run `pip install -e .`
 5. Run `pre-commit install`
 ```
@@ -203,3 +214,4 @@ There's lots. I'm still fleshing out some of these files and processes, but some
 - Separate test-environment.yaml file that does not install jupyter and its dependencies in your CI system. This is a very heavy package and makes CI take longer than necessary.
 - Notes around documentation automation via sphinx or pdoc
 - Notes around project management via github issues & github projects (trello, jira, etc. as alternatives)
+- Research DVC and have a better solution for data version management.
