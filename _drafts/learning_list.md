@@ -8,7 +8,7 @@ title: Running Learning List
 - SICP ala UC Berkely CS 61A Spring 2011 (https://teachyourselfcs.com)
 
 # Want to Learn
-- MIT Distributed Systems lectures: https://www.youtube.com/watch?v=cQP8WApzIQQ&list=PLrw6a1wE39_tb2fErI4-WkMbsvGQk9_UB
+- MIT Distributed Systems lectures (https://www.youtube.com/watch?v=cQP8WApzIQQ&list=PLrw6a1wE39_tb2fErI4-WkMbsvGQk9_UB)
 - Read *Designing Data-Intensive Applications*
 - New fastai course (completely revamped)
 - Dash Dashboarding
