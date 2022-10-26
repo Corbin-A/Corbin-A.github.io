@@ -22,7 +22,3 @@ The topics I hope to cover are varied in nature: some long-form political and cu
 Thank you for visiting, and I hope you enjoy the blog.
 
 \* It would be remiss of me if I did not admit to my sorry attempt at being clever with a double-meaning behind choosing the adjective “Developing” for this blog given my CS background.
-
-### Contact me
-
-[corbin.albert@gmail.com](mailto:corbin.albert@gmail.com)
